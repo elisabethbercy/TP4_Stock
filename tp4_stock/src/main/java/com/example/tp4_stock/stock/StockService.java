@@ -1,47 +1,41 @@
 package com.example.tp4_stock.stock;
 
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StockService {
 
-    private List<Stock> stockList = new ArrayList<>();
+    private final Map<String, Integer> stockMap = new HashMap<>();
 
-  
     public StockService() {
-        stockList.add(new Stock("Table", 20));
-        stockList.add(new Stock("Bags", 22));
-        stockList.add(new Stock("Books", 10));
-        stockList.add(new Stock("Miks", 17));
+        // Initialize stock
+        stockMap.put("Table", 20);
+        stockMap.put("Bags", 22);
+        stockMap.put("Books", 10);
+        stockMap.put("Miks", 17);
     }
 
-    public List<Stock> getAllStock() {
-        return stockList;
-    }
-
-
+    // Subtract quantity when an item is sold or used
     public void updateStock(String name, int qty) {
-        for (Stock stock : stockList) {
-            if (stock.getName().equals(name)) {
-                stock.setQty(stock.getQty() - qty);
-                break;
-            }
-        }
+        stockMap.computeIfPresent(name, (key, oldQty) -> Math.max(oldQty - qty, 0));
     }
 
-    public void restock() {
-        // Restock to original
-        for (Stock stock : stockList) {
-            stock.setQty(20); 
-            // reset stock to 20 for all items
-        }
+    // Reset all stock to default values
+    public void restockAll() {
+        stockMap.put("Table", 20);
+        stockMap.put("Bags", 22);
+        stockMap.put("Books", 10);
+        stockMap.put("Miks", 17);
     }
 
-    
-    public void refreshStock() {
-        
+    // Return stock as a list of Stock objects
+    public List<Stock> getStockList() {
+        return stockMap.entrySet().stream()
+                .map(entry -> new Stock(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 }
