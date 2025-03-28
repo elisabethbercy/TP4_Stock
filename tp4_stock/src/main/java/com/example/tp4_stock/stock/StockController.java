@@ -28,33 +28,33 @@ public class StockController {
 	
 	@GetMapping("/home")
 	public ModelAndView home() {
-        // Create a list of Stock objects
+       
         List<Stock> stock = new ArrayList<>();
     
-        // Create Stock objects
         var a1 = new Stock("Table", 20);
         var a2 = new Stock("Bags", 22);
         var a3 = new Stock("Books", 10);
         var a4 = new Stock("Miks", 17);
     
-        // Add the Stock objects to the list
         stock.add(a1);
         stock.add(a2);
         stock.add(a3);
-        stock.add(a4);
-    
-        // Create the ModelAndView and add the list of stocks
+        stock.add(a4);   
+        
         ModelAndView model = new ModelAndView("/stock/home");
         model.addObject("stock", stock);
-    
-        // Return the ModelAndView
+
         return model;
     }
 
     @PostMapping("/restock")
     public ModelAndView restock() {
-        // Create a ModelAndView object for the restock page
        return home();
+    }
+
+    @PostMapping("/refresh")
+    public ModelAndView refresh(){
+        return home();
 
     }
     

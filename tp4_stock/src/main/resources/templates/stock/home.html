@@ -1,23 +1,25 @@
 <html xmlns:th="https://www.thymeleaf.org">
-	<body>
-		<h1> Articles</h1>
-		
-		<table border="1">
-		<tr><th>Item</th><th>Quantity</th>
-		<tr th:each="stock : ${stock}">
-			<td th:text="${stock.name}" />
-			<td th:text="${stock.qty}" />		
-		</tr>
-			
-		</table>
-		
-		<hr/>
-		<form action="/stock/restock" method="post">
-		<input type="submit" value="Restock"/>
-		</form>
-		
-		
-		
-	</body>
-	
+    <body>
+        <h1>Articles</h1>
+        
+        <table border="1">
+            <tr><th>Item</th><th>Quantity</th></tr>
+            <tr th:each="stock : ${stock}">
+                <td th:text="${stock.name}" />
+                <td th:text="${stock.qty}" />
+            </tr>
+        </table>
+        
+        <hr/>
+        
+        <!-- Restock Button -->
+        <form action="/stock/restock" method="post">
+            <input type="submit" value="Restock"/>
+        </form>
+        
+        <!-- Refresh Button -->
+        <form action="/stock/refresh" method="post">
+            <input type="submit" value="Refresh"/>
+        </form>
+    </body>
 </html>
